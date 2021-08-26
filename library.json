@@ -1,0 +1,13 @@
+{
+  "name": "ts-code",
+  "description": "",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MausTec/ts-code"
+  },
+  "dependencies": {
+  },
+  "build": {
+  }
+}
