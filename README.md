@@ -64,14 +64,50 @@ to Realtime mode, use `S117 - Start Realtime Programming`.
 |...|||||
 |T28|Return to Home Position|RETURN_HOME|||
 |...|||||
-|T90|Absolute Programming|PROGRAM_ABSOLUTE|||
-|T91|Relative Programming|PROGRAM_RELATIVE|||
+|T90|Absolute Programming|PROGRAM_POSITION_ABSOLUTE|||
+|T91|Relative Programming|PROGRAM_POSITION_RELATIVE|||
 
 **S-codes**
 
 |CMD|Name|Symbol|Arguments|Description|
 |---|----|------|---------|-----------|
+|S00|Program Stop (Immediate)|HALT_IMMEDIATE|||
+|S01|Sleep or Conditional Stop|CONDITIONAL_STOP|||
+|S02|End of Program|END_OF_PROGRAM|||
+|S03|Vibration On|VIBRATE_ON|||
+|S04|Vibration Pattern|VIBRATE_PATTERN|||
+|S05|Vibration Off|VIBRATE_OFF|||
+|S06|Default Channel Select|DEFAULT_CHANNEL_SET|||
+|S07|Lube Mist Pump ON|LUBE_MIST_ON|||
+|S08|Lube Flood Pump ON|LUBE_FLOOD_ON|||
+|S09|Lube Pump OFF|LUBE_OFF|||
+|S10|Air Out Valve OPEN|AIR_OUT_OPEN|||
+|S11|Air In Valve OPEN|AIR_IN_OPEN|||
+|S12|Air Valve CLOSE|AIR_CLOSE|||
 |...|||||
+|S70|Display a Message|DISPLAY_MESSAGE|||
+|S72|Play a Tone|PLAY_TONE|||
+|...|||||
+|S96|Empty Program Buffer|BUFFER_EMPTY|||
+|S97|Start Buffer Programming|BUFFER_START|||
+|S98|End Buffer Programming|BUFFER_END|||
+|S99|Execute Program Buffer|BUFFER_EXECUTE|||
+|...|||||
+|S104|Enable Heater|ENABLE_HEATER|||
+|S105|Get Heater Temperature|GET_HEATER_TEMP|||
+|S106|Fan On|FAN_ON|||
+|S107|Fan Off|FAN_OFF|||
+|S108|Cancel Heating|CANCEL_HEATING|||
+|S109|Set Heater and Wait|ENABLE_HEATER_AND_WAIT|||
+|...|||||
+|S113|Ping / Pong|PING|||
+|S114|Report Current Positions|GET_CURRENT_POSITIONS|||
+|S115|Report Firmware and Capstring|GET_CAPSTRING|||
+|S116|Wait for Movement|WAIT_MOVEMENT|||
+|S117|Start Realtime Programming|START_REALTIME_PROGRAMMING|||
+|S118|Start Queued Programming|START_QUEUED_PROGRAMMING|||
+|...|||||
+|S150|Set LED Color|SET_LED_COLOR|||
 
 ## Capstrings
 
