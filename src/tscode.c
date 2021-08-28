@@ -4,6 +4,8 @@
 #include <math.h>
 #include <string.h>
 
+#include <stdint.h>
+
 #include "tscode.h"
 
 #ifndef TSCODE_DISABLE_STREAM_BUFFERS
