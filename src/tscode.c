@@ -6,6 +6,19 @@
 
 #include "tscode.h"
 
+#ifndef TSCODE_DISABLE_STREAM_BUFFERS
+static char _istream_buffer[TSCODE_ISTREAM_BUFFER_SIZE + 1] = "";
+static size_t _istream_buffer_idx = 0;
+static char _ostream_buffer[TSCODE_OSTREAM_BUFFER_SIZE + 1] = "";
+#endif
+
+// Don't forget to keep this in sync with the base enum decl!
+const char *tscode_command_response_str[3] = {
+    "OK", // TSCODE_RESPONSE_OK
+    "HOLD", // TSCODE_RESPONSE_HOLD
+    "FAULT", // TSCODE_RESPONSE_FAULT
+};
+
 void _tscode_fmt_unit(char* buffer, size_t n, tscode_unit_t* unit) {
     if (unit->unit == TSCODE_UNIT_BYTE) {
         snprintf(buffer, n, "0x%02x", (uint8_t) unit->value);
@@ -376,3 +389,56 @@ void tscode_dispose_command(tscode_command_t* cmd) {
     if (cmd->speed != NULL) free(cmd->speed);
     if (cmd->radius != NULL) free(cmd->radius);
 }
+
+
+void tscode_process_buffer(char *buffer, tscode_command_callback_t callback, char *response, size_t resp_len) {
+    tscode_command_t cmd;
+
+    char* ptr = NULL;
+    char* saveptr = NULL;
+
+    ptr = tscode_parse_command(buffer, &cmd, &saveptr);
+
+    while (ptr != NULL) {
+        tscode_command_response_t resp = callback(&cmd, response, resp_len);
+        if (response[0] != '\0') strncat(response, "\n", resp_len);
+        strncat(response, tscode_command_response_str[resp], resp_len);
+        tscode_dispose_command(&cmd);
+
+        ptr = tscode_parse_command(NULL, &cmd, &saveptr);
+    }
+}
+
+#ifndef TSCODE_DISABLE_STREAM_BUFFERS
+void tscode_process_stream(FILE* istream, FILE* ostream, tscode_command_callback_t callback) {
+    return;
+}
+
+#else
+void tscode_process_stream(FILE* istream, FILE* ostream, tscode_command_callback_t callback) {
+    char c = getc(istream);
+
+    if (c != 0xFF) {
+        if (c == '\n') {
+            if (_istream_buffer[0] != '\0') {
+                _ostream_buffer[0] = '\0';
+                tscode_process_buffer(_istream_buffer, callback, _ostream_buffer, TSCODE_OSTREAM_BUFFER_SIZE);
+                fputs(_ostream_buffer, ostream);
+                fputc('\n', ostream);
+            }
+
+            _istream_buffer[0] = '\0';
+            _istream_buffer_idx = 0;
+        } else {
+            if (_istream_buffer_idx >= TSCODE_ISTREAM_BUFFER_SIZE) {
+                // BUFFER OVERFLOW INCOMING
+                // we can realloc later, for now I'm gonna return, which will discard everything else until a newline
+                return;
+            } else {
+                _istream_buffer[_istream_buffer_idx++] = c;
+                _istream_buffer[_istream_buffer_idx] = '\0';
+            }
+        }
+    }
+}
+#endif

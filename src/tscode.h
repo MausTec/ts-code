@@ -6,44 +6,37 @@ extern "C" {
 #endif
 
 #include "tscode_command_types.h"
+#include "tscode_cap_flags.h"
+#include "tscode_units.h"
 
+// Argument string buffers start at this size and realloc automatically in increments.
 #ifndef TSCODE_ARG_STRING_LENGTH_INCREMENT
 #define TSCODE_ARG_STRING_LENGTH_INCREMENT 40
 #endif
 
-/**
- * Various unit systems.
- */
-enum tscode_unit_system {
-    TSCODE_UNIT_PERCENTAGE,
-    TSCODE_UNIT_METRIC,
-    TSCODE_UNIT_INCH,
-    TSCODE_UNIT_BYTE,
-    TSCODE_UNIT_DEGREES,
-};
+// Input stream buffers for tscode_process_stream.
+#ifndef TSCODE_ISTREAM_BUFFER_SIZE
+#define TSCODE_ISTREAM_BUFFER_SIZE 120
+#endif
 
-typedef enum tscode_unit_system tscode_unit_system_t;
+// Output stream buffers for tscode_process_stream.
+#ifndef TSCODE_OSTREAM_BUFFER_SIZE
+#define TSCODE_OSTREAM_BUFFER_SIZE 120
+#endif
+
 
 /**
- * Contains a unit and associated type as a command argument.
+ * // Don't forget to keep this in sync with the strings decl below and in tscode.c!
  */
-struct tscode_unit {
-    tscode_unit_system_t unit;
-    float value;
+enum tscode_command_response {
+    TSCODE_RESPONSE_OK,
+    TSCODE_RESPONSE_HOLD,
+    TSCODE_RESPONSE_FAULT,
 };
 
-typedef struct tscode_unit tscode_unit_t;
+typedef enum tscode_command_response tscode_command_response_t;
 
-/**
- * Contains an x, y, z coordinate for a command argument.
- */
-struct tscode_coordinate {
-    tscode_unit_t x;
-    tscode_unit_t y;
-    tscode_unit_t z;
-};
-
-typedef struct tscode_coordinate tscode_coordinate_t;
+extern const char *tscode_command_response_str[3];
 
 /**
  * Contains a full definition of a TS-code command, including all relevant arguments and command type.
@@ -71,6 +64,12 @@ typedef struct tscode_command tscode_command_t;
     .start = NULL, \
     .radius = NULL, \
 }
+
+/**
+ * This is the callback you're going to want to write if you use the process_ functions.
+ */
+typedef tscode_command_response_t (*tscode_command_callback_t)(tscode_command_t*, char*, size_t);
+
 
 /**
  * This frees up memory used for a command, as well as any structures pointed to by it.
@@ -119,9 +118,28 @@ char *tscode_parse_argument(char *arg_string, char *argc, float *argv, char **ar
 char *tscode_parse_command(char *cmd_string, tscode_command_t *cmd, char **saveptr);
 
 /**
- * This just prints the command.
+ * This just prints the command and various debugging information. It is not implemented unless DEBUG build.
  */
 void _tscode_print_command(tscode_command_t *cmd);
+
+/**
+ * This will automatically process a buffer, scanning for commands and calling the callback for each. You should pass
+ * a character buffer and length for response, so that your commands have something to write to.
+ */
+void tscode_process_buffer(char *buffer, tscode_command_callback_t callback, char *response, size_t resp_len);
+
+/**
+ * This automatically processes streams, calling the callback every time a command is parsed in full. It uses the single
+ * internal command buffer, so you should be weary of using it for multiple streams. For multiple streams, use
+ * tscode_process_stream_r. If you only do multi-stream parsing, define TSCODE_DISABLE_STREAM_BUFFERS.
+ */
+void tscode_process_stream(FILE* istream, FILE* ostream, tscode_command_callback_t callback);
+
+/**
+ * This automatically processes streams, calling the callback every time a command is parsed in full. It requires
+ * external buffers, which makes it useful for multi-stream processing.
+ */
+void tscode_process_stream_r(FILE* istream, FILE* ostream, tscode_command_callback_t callback, char* istream_buf, size_t istream_buf_len, char* ostream_buf, size_t ostream_buf_len);
 
 #ifdef __cplusplus
 }
