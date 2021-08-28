@@ -43,6 +43,7 @@ enum tscode_command_type {
     TSCODE_START_REALTIME_PROGRAMMING = S(117), // Start Realtime Programming
     TSCODE_START_QUEUED_PROGRAMMING = S(118), // Start Queued Programming
     TSCODE_SET_LED_COLOR = S(150), // Set LED Color
+    EXIT_TSCODE_MODE = S(199), // Exit TS-code Programming Mode
 };
 
 typedef enum tscode_command_type tscode_command_type_t;

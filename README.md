@@ -40,7 +40,7 @@ instances of similar things, such as devices with multiple vibrators or linear a
 
 ```
 S70 "Hang on, have fun!"    ' this will make the device show a message
-S03 B255                    ' this sets vibration to byte value 255 (100%, full ON)
+S03 BV255                   ' this sets vibration to byte value 255 (100%, full ON)
 T0F60                       ' start reciprocating at 60 RPM, note the leading 0 in command is optional
 T0 C1 R100 I1000            ' reciprocate, channel 1, 100 RPM ramp to over 1000 ms
 T22                         ' program coordinate in percent (for next example)
@@ -135,6 +135,7 @@ Todo: Get battery, device connection info, set device connection info, set/get a
 |S118|Start Queued Programming|START_QUEUED_PROGRAMMING|||
 |...|||||
 |S150|Set LED Color|SET_LED_COLOR|||
+|S199|Exit TS-code Mode|EXIT_TSCODE_MODE|||
 
 ## Capstrings
 
