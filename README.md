@@ -1,5 +1,30 @@
 # TS-code is like G-code but it goes up your butt.
 
+```c
+#include "tscode.h"
+
+tscode_command_response_t cmd_callback(tscode_command_t* cmd, char* response, size_t resp_len) {
+    switch (cmd->type) {
+        case TSCODE_VIBRATE_ON:
+            hardware_set_vibration_level(cmd->speed);
+            break;
+        default:
+            return TSCODE_RESPONSE_FAULT;
+    }
+
+    return TSCODE_RESPONSE_OK;
+}
+
+void app_main(void) {
+    for (;;) {
+        tscode_process_stream(stdin, stdout, cmd_callback);
+        yield();
+    }
+}
+```
+
+# About TS-code
+
 There are T-codes and S-codes. T-codes control movement-based toys, and S-codes are System codes that either control 
 metadata or basic system-level stuff. The majority of these have direct equivalents to G-code counterparts. When 
 determining the control set to present for a TS-code enabled device, you should inspect its capabilities, which will 
