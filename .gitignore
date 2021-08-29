@@ -20,3 +20,4 @@ VERSION.h
 vendor/
 tmp/
 *.code-workspace
+doc/

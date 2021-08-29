@@ -1,0 +1,333 @@
+{
+    "version": "1",
+    "arguments": [
+        {
+            "symbol": "\"",
+            "name": "String",
+            "description": "Provide a quoted string as an argument. Escape double quotes with backslash (\\)."
+        },
+        {
+            "symbol": "C",
+            "name": "Channel",
+            "description": "Specify a channel for the given argument to operate against."
+        },
+        {
+            "symbol": "X",
+            "name": "X-Axis End",
+            "description": "X-Axis ending position in the current set unit."
+        },
+        {
+            "symbol": "Y",
+            "name": "Y-Axis End",
+            "description": "Y-Axis ending position in the current set unit."
+        },
+        {
+            "symbol": "Z",
+            "name": "Z-Axis End",
+            "description": "Z-Axis ending position in the current set unit."
+        },
+        {
+            "symbol": "I",
+            "name": "X-Axis Start",
+            "description": "X-Axis starting position in the current set unit."
+        },
+        {
+            "symbol": "J",
+            "name": "Y-Axis Start",
+            "description": "Y-Axis starting position in the current set unit."
+        },
+        {
+            "symbol": "K",
+            "name": "Z-Axis Start",
+            "description": "Z-Axis starting position in the current set unit."
+        },
+        {
+            "symbol": "R",
+            "name": "Radius",
+            "description": "Arc movement radius in the current set unit."
+        },
+        {
+            "symbol": "F",
+            "name": "Feedrate",
+            "description": "Movement speed specified in Units / Second"
+        },
+        {
+            "symbol": "V",
+            "name": "Value / Speed",
+            "description": "Single value or speed in the current set unit."
+        },
+        {
+            "symbol": "P",
+            "name": "Unit: Percentage",
+            "description": "Set parser unit to Percentages for the rest of this line, or until changed."
+        },
+        {
+            "symbol": "B",
+            "name": "Unit: Byte",
+            "description": "Set parser unit to Bytes for the rest of this line, or until changed."
+        },
+        {
+            "symbol": "N",
+            "name": "Unit: Inch",
+            "description": "Set parser unit to Inches for the rest of this line, or until changed."
+        },
+        {
+            "symbol": "M",
+            "name": "Unit: Metric (Millimeters)",
+            "description": "Set parser unit to Millimeters for the rest of this line, or until changed."
+        },
+        {
+            "symbol": "D",
+            "name": "Unit: Degrees",
+            "description": "Set parser unit to Degrees for the rest of this line, or until changed."
+        }
+    ],
+    "capabilities": [
+        {
+            "token": "A",
+            "symbol": "AIR_VALVES",
+            "name": "Air Valves",
+            "description": "Device has air valves."
+        },
+        {
+            "token": "B",
+            "symbol": "MULTIBUFFERS",
+            "name": "Multiple Command Buffers",
+            "description": "Device supports buffered programming with the given range of buffers."
+        },
+        {
+            "token": "C",
+            "symbol": "CONDITIONAL_STOP",
+            "name": "Conditional / Soft Stop",
+            "description": "Device supports a soft stop or sleep mode."
+        },
+        {
+            "token": "D",
+            "symbol": "LEDS",
+            "name": "RGB LEDs",
+            "description": "Device has RGB LEDs."
+        },
+        {
+            "token": "F",
+            "symbol": "FANS",
+            "name": "Fans",
+            "description": "Device has cooling fans."
+        },
+        {
+            "token": "H",
+            "symbol": "HEATERS",
+            "name": "Heaters",
+            "description": "Device has heaters."
+        },
+        {
+            "token": "L",
+            "symbol": "LINEAR",
+            "name": "Linear Movement",
+            "description": "Device supports some form of linear movement."
+        },
+        {
+            "token": "P",
+            "symbol": "LUBE_PUMPS",
+            "name": "Lubricant Pumps",
+            "description": "Device has lubricant pumps."
+        },
+        {
+            "token": "R",
+            "symbol": "RECIPROCATING",
+            "name": "Reciprocating Movement",
+            "description": "Device supports some form of reciprocating movement."
+        },
+        {
+            "token": "S",
+            "symbol": "SPEAKERS",
+            "name": "Speakers / Tone Playback",
+            "description": "Device supports tone playback within the given frequency range in Hz."
+        },
+        {
+            "token": "T",
+            "symbol": "ROTATING",
+            "name": "Rotating Movement",
+            "description": "Device supports some form of rotational movement."
+        },
+        {
+            "token": "V",
+            "symbol": "VIBRATING",
+            "name": "Vibrating",
+            "description": "Device has some form of vibrator."
+        },
+        {
+            "token": "E",
+            "symbol": "BATTERIES",
+            "name": "Battery Operated",
+            "description": "Device has batteries or other consumable power input (reactor, hydrogen cell, etc.)"
+        },
+        {
+            "token": "N",
+            "symbol": "NETWORKING",
+            "name": "Wireless Networking",
+            "description": "Device supports wifi connection or other networking commands."
+        }
+    ],
+    "commands": [
+        {
+            "command": "T00",
+            "symbol": "RECIPROCATING_MOVE",
+            "name": "Reciprocating Move",
+            "description": "Starts or stops a reciprocating movement, specified by speed V.",
+            "capability_group": "RECIPROCATING",
+            "arguments": "[C]V"
+        },
+        {
+            "command": "T01",
+            "symbol": "LINEAR_MOVE",
+            "name": "Linear Move",
+            "description": "Move the given channel to the specified coordinate in a straight line.",
+            "capability_group": "LINEAR",
+            "arguments": "[C]XYZ[F]"
+        },
+        {
+            "command": "T02",
+            "symbol": "CW_CIRCULAR_MOVE",
+            "name": "Clockwise Circular Move",
+            "description": "Move the given channel in a clockwise circle from (i,j,k) to (x,y,z) around radius R on the current selected plane.",
+            "capability_group": "LINEAR",
+            "arguments": "[C]IJKRXYZ[F]"
+        },
+        {
+            "command": "T03",
+            "symbol": "CCW_CIRCULAR_MOVE",
+            "name": "Counter-clockwise Circular Move",
+            "description": "Move the given channel in a counter-clockwise circle from (i,j,k) to (x,y,z) around radius R on the current selected plane.",
+            "capability_group": "LINEAR",
+            "arguments": "[C]IJKRXYZ[F]"
+        },
+        {
+            "command": "T04",
+            "symbol": "DWELL",
+            "name": "Dwell",
+            "description": "Hold a particular channel's movements for a given time V in MS.",
+            "capability_group": "*",
+            "arguments": "[C]V"
+        },
+        {
+            "command": "T05",
+            "symbol": "ROTATIONAL_MOVE",
+            "name": "Rotational Move",
+            "description": "Rotate the given channel around a given axis in unit Degrees.",
+            "capability_group": "ROTATING",
+            "arguments": "[C]XYZ[F]"
+        },
+        {
+            "command": "T17",
+            "symbol": "SELECT_XY_PLANE",
+            "name": "Select X-Y Plane",
+            "description": "Set the given channel's active interpolation plane to X-Y.",
+            "capability_group": "LINEAR",
+            "arguments": "[C]"
+        },
+        {
+            "command": "T18",
+            "symbol": "SELECT_XZ_PLANE",
+            "name": "Select X-Z Plane",
+            "description": "Set the given channel's active interpolation plane to X-Z.",
+            "capability_group": "LINEAR",
+            "arguments": "[C]"
+        },
+        {
+            "command": "T19",
+            "symbol": "SELECT_YZ_PLANE",
+            "name": "Select Y-Z Plane",
+            "description": "Set the given channel's active interpolation plane to Y-Z.",
+            "capability_group": "LINEAR",
+            "arguments": "[C]"
+        },
+        {
+            "command": "T20",
+            "symbol": "PROGRAM_UNIT_INCH",
+            "name": "Program Unit: Inches",
+            "description": "Set the parser default unit for all future commands to Inches.",
+            "capability_group": "*",
+            "arguments": ""
+        },
+        {
+            "command": "T21",
+            "symbol": "PROGRAM_UNIT_METRIC",
+            "name": "Program Unit: Metric (Millimeter)",
+            "description": "Set the parser default unit for all future commands to Millimeters.",
+            "capability_group": "*",
+            "arguments": ""
+        },
+        {
+            "command": "T22",
+            "symbol": "PROGRAM_UNIT_PERCENTAGE",
+            "name": "Program Unit: Percentage",
+            "description": "Set the parser default unit for all future commands to Percentages.",
+            "capability_group": "*",
+            "arguments": ""
+        },
+        {
+            "command": "T23",
+            "symbol": "PROGRAM_UNIT_BYTE",
+            "name": "Program Unit: Byte",
+            "description": "Set the parser default unit for all future commands to Byte values (0-255).",
+            "capability_group": "*",
+            "arguments": ""
+        },
+        {
+            "command": "T28",
+            "symbol": "RETURN_HOME",
+            "name": "Return to Home Position",
+            "description": "Return all movement channels to their home position and/or reinitialize the device.",
+            "capability_group": "*",
+            "arguments": ""
+        },
+        {
+            "command": "T90",
+            "symbol": "PROGRAM_POSITION_ABSOLUTE",
+            "name": "Absolute Programming",
+            "description": "All future commands are specified as absolute measurements from the origin or rest position.",
+            "capability_group": "*",
+            "arguments": ""
+        },
+        {
+            "command": "T91",
+            "symbol": "PROGRAM_POSITION_RELARIVE",
+            "name": "Relative (Incremental) Programming",
+            "description": "All future commands are specified in an additive increment from the current position of that channel.",
+            "capability_group": "*",
+            "arguments": ""
+        }
+    ],
+    "responses": [
+        {
+            "symbol": "OK",
+            "name": "OK",
+            "description": "Previous command executed OK and has finished or queued."
+        },
+        {
+            "symbol": "HOLD",
+            "name": "Hold Until OK",
+            "description": "Device buffer full, wait until OK response to continue sending data."
+        },
+        {
+            "symbol": "OUT_OF_BOUNDS",
+            "name": "Out of Bounds",
+            "description": "Specified value was out of bounds for the given channel. Check your capstrings."
+        },
+        {
+            "symbol": "NO_CHANNEL",
+            "name": "Channel Not Found",
+            "description": "The specified channel does not exist for the given capability. Check your capstrings."
+        },
+        {
+            "symbol": "NO_CAPABILITY",
+            "name": "Capability Not Supported",
+            "description": "The target device does not support this functionality. Check your capstrings."
+        },
+        {
+            "symbol": "FAULT",
+            "name": "General Fault",
+            "description": "Something went wrong and that command cannot be executed."
+        }
+    ]
+}

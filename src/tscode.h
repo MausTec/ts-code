@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <stdio.h>
+
 #include "tscode_command_types.h"
 #include "tscode_cap_flags.h"
 #include "tscode_units.h"
@@ -31,6 +33,9 @@ extern "C" {
 enum tscode_command_response {
     TSCODE_RESPONSE_OK,
     TSCODE_RESPONSE_HOLD,
+    TSCODE_RESPONSE_OUT_OF_BOUNDS,
+    TSCODE_RESPONSE_NO_CHANNEL,
+    TSCODE_RESPONSE_NO_CAPABILITY,
     TSCODE_RESPONSE_FAULT,
 };
 
@@ -70,6 +75,18 @@ typedef struct tscode_command tscode_command_t;
  */
 typedef tscode_command_response_t (*tscode_command_callback_t)(tscode_command_t*, char*, size_t);
 
+/**
+ * This holds information about a device, which is used either in host mode when querying the stream, or in client
+ * mode when responding to a host query. This can be automatically handled if you use tscode_set_device_info and
+ * process your stream using one of the process_ commands. Be sure to also add your caps.
+ */
+struct tscode_device_info {
+    const char *manufacturer;
+    const char *device_name;
+    const char *firmware_version;
+};
+
+typedef struct tscode_device_info tscode_device_info_t;
 
 /**
  * This frees up memory used for a command, as well as any structures pointed to by it.

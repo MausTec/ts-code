@@ -9,6 +9,7 @@ extern "C" {
  * Various unit systems.
  */
 enum tscode_unit_system {
+    TSCODE_UNIT_NONE,
     TSCODE_UNIT_PERCENTAGE,
     TSCODE_UNIT_METRIC,
     TSCODE_UNIT_INCH,
@@ -17,6 +18,8 @@ enum tscode_unit_system {
 };
 
 typedef enum tscode_unit_system tscode_unit_system_t;
+
+extern char tscode_unit_str[6];
 
 /**
  * Contains a unit and associated type as a command argument.

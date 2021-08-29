@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 #include "tscode.h"
+#include "tscode_capabilities.h"
 
 #ifndef TSCODE_DISABLE_STREAM_BUFFERS
 static char _istream_buffer[TSCODE_ISTREAM_BUFFER_SIZE + 1] = "";
@@ -14,12 +15,15 @@ static size_t _istream_buffer_idx = 0;
 static char _ostream_buffer[TSCODE_OSTREAM_BUFFER_SIZE + 1] = "";
 #endif
 
+
 // Don't forget to keep this in sync with the base enum decl!
 const char *tscode_command_response_str[3] = {
     "OK", // TSCODE_RESPONSE_OK
     "HOLD", // TSCODE_RESPONSE_HOLD
     "FAULT", // TSCODE_RESPONSE_FAULT
 };
+
+char tscode_unit_str[6] = { ' ', 'P', 'M', 'N', 'B', 'D' };
 
 void _tscode_fmt_unit(char* buffer, size_t n, tscode_unit_t* unit) {
     if (unit->unit == TSCODE_UNIT_BYTE) {
@@ -257,8 +261,8 @@ tscode_command_type_t tscode_parse_cmd_type(char* cmd, char** saveptr) {
     char* ptr = tscode_parse_argument(cmd, &arg_char, &value, &args, saveptr);
 
     while (ptr != NULL) {
-        if (arg_char == 'T') return (tscode_command_type_t) T((int) value);
-        if (arg_char == 'S') return (tscode_command_type_t) S((int) value);
+        if (arg_char == 'T') return (tscode_command_type_t) __T((int) value);
+        if (arg_char == 'S') return (tscode_command_type_t) __S((int) value);
 
         ptr = tscode_parse_argument(NULL, &arg_char, &value, &args, saveptr);
     }
@@ -402,7 +406,15 @@ void tscode_process_buffer(char *buffer, tscode_command_callback_t callback, cha
     ptr = tscode_parse_command(buffer, &cmd, &saveptr);
 
     while (ptr != NULL) {
-        tscode_command_response_t resp = callback(&cmd, response, resp_len);
+        tscode_command_response_t resp = TSCODE_RESPONSE_FAULT;
+
+        if (cmd.type == TSCODE_GET_CAPSTRING) {
+            tscode_generate_capstring(response, resp_len);
+            resp = TSCODE_RESPONSE_OK;
+        } else {
+            resp = callback(&cmd, response, resp_len);
+        }
+
         if (response[0] != '\0') strncat(response, "\n", resp_len);
         strncat(response, tscode_command_response_str[resp], resp_len);
         tscode_dispose_command(&cmd);
@@ -411,7 +423,7 @@ void tscode_process_buffer(char *buffer, tscode_command_callback_t callback, cha
     }
 }
 
-#ifndef TSCODE_DISABLE_STREAM_BUFFERS
+#ifdef TSCODE_DISABLE_STREAM_BUFFERS
 void tscode_process_stream(FILE* istream, FILE* ostream, tscode_command_callback_t callback) {
     return;
 }

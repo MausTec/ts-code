@@ -3,6 +3,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#include "tscode_capabilities.h"
 #include "tscode.h"
 
 #define EXAMPLE_USE_CALLBACK_PROCESSING
@@ -23,6 +24,30 @@ void app_main(void) {
     size_t idx = 0;
 #endif
 
+    // Register our test capabilities:
+    tscode_cap_channel_t ch1 = TSCODE_CAP_CHANNEL_DEFAULT;
+    ch1.capability = TSCODE_CAP_VIBRATING;
+    ch1.range.unit = TSCODE_UNIT_BYTE;
+    ch1.range.max = 255;
+
+    tscode_register_channel(&ch1);
+
+    // Recycle that object to register our message handler
+    ch1.capability = TSCODE_CAP_MESSAGES;
+    ch1.range.unit = TSCODE_UNIT_NONE;
+    ch1.range.max = 40;
+
+    tscode_register_channel(&ch1);
+
+    tscode_device_vendor_details_t vendor = {
+        .vendor = "Maus-Tec Electronics",
+        .device = "TS-code Test Application",
+        .version = "v0.1.9",
+    };
+
+    tscode_register_vendor_details(&vendor);
+
+    // Loop and process messages.
     for (;;) {
 #ifdef EXAMPLE_USE_STREAM_PROCESSING
         tscode_process_stream(stdin, stdout, cmd_callback);
