@@ -70,27 +70,26 @@ to Realtime mode, use `S117 - Start Realtime Programming`.
 
 **T-codes**
 
-|CMD|Name|Symbol|Description|
-|---|----|------|-----------|
-|T00|Reciprocating Move|RECIPROCATING_MOVE|Starts or stops a reciprocating movement, specified by speed V.|
-|T01|Linear Move|LINEAR_MOVE|Move the given channel to the specified coordinate in a straight line.|
-|T02|Clockwise Circular Move|CW_CIRCULAR_MOVE|Move the given channel in a clockwise circle from (i,j,k) to (x,y,z) around radius R on the current selected plane.|
-|T03|Counter-clockwise Circular Move|CCW_CIRCULAR_MOVE|Move the given channel in a counter-clockwise circle from (i,j,k) to (x,y,z) around radius R on the current selected plane.|
-|T04|Dwell|DWELL|Hold a particular channel's movements for a given time V in MS.|
-|T05|Rotational Move|ROTATIONAL_MOVE|Rotate the given channel around a given axis in unit Degrees.|
-|...||||
-|T17|Select X-Y Plane|SELECT_XY_PLANE|Set the given channel's active interpolation plane to X-Y.|
-|T18|Select X-Z Plane|SELECT_XZ_PLANE|Set the given channel's active interpolation plane to X-Z.|
-|T19|Select Y-Z Plane|SELECT_YZ_PLANE|Set the given channel's active interpolation plane to Y-Z.|
-|T20|Program Unit: Inches|PROGRAM_UNIT_INCH|Set the parser default unit for all future commands to Inches.|
-|T21|Program Unit: Metric (Millimeter)|PROGRAM_UNIT_METRIC|Set the parser default unit for all future commands to Millimeters.|
-|T22|Program Unit: Percentage|PROGRAM_UNIT_PERCENTAGE|Set the parser default unit for all future commands to Percentages.|
-|T23|Program Unit: Byte|PROGRAM_UNIT_BYTE|Set the parser default unit for all future commands to Byte values (0-255).|
-|...||||
-|T28|Return to Home Position|RETURN_HOME|Return all movement channels to their home position and/or reinitialize the device.|
-|...||||
-|T90|Absolute Programming|PROGRAM_POSITION_ABSOLUTE|All future commands are specified as absolute measurements from the origin or rest position.|
-|T91|Relative (Incremental) Programming|PROGRAM_POSITION_RELARIVE|All future commands are specified in an additive increment from the current position of that channel.|
+|CMD|Name|Symbol|Arguments|Capability|
+|---|---|---|---|---|
+|T00|Reciprocating Move|`RECIPROCATING_MOVE`|C?, V|`RECIPROCATING`|
+|T01|Linear Move|`LINEAR_MOVE`|C?, X, Y, Z, F?|`LINEAR`|
+|T02|Clockwise Circular Move|`CW_CIRCULAR_MOVE`|C?, I, J, K, R, X, Y, Z, F?|`LINEAR`|
+|T03|Counter-clockwise Circular Move|`CCW_CIRCULAR_MOVE`|C?, I, J, K, R, X, Y, Z, F?|`LINEAR`|
+|T04|Dwell|`DWELL`|C?, V|`*`|
+|T05|Rotational Move|`ROTATIONAL_MOVE`|C?, X, Y, Z, F?|`ROTATING`|
+|T17|Select X-Y Plane|`SELECT_XY_PLANE`|C?|`LINEAR`|
+|T18|Select X-Z Plane|`SELECT_XZ_PLANE`|C?|`LINEAR`|
+|T19|Select Y-Z Plane|`SELECT_YZ_PLANE`|C?|`LINEAR`|
+|T20|Program Unit: Inches|`PROGRAM_UNIT_INCH`||`*`|
+|T21|Program Unit: Metric (Millimeter)|`PROGRAM_UNIT_METRIC`||`*`|
+|T22|Program Unit: Percentage|`PROGRAM_UNIT_PERCENTAGE`||`*`|
+|T23|Program Unit: Byte|`PROGRAM_UNIT_BYTE`||`*`|
+|T28|Return to Home Position|`RETURN_HOME`||`*`|
+|T90|Absolute Programming|`PROGRAM_POSITION_ABSOLUTE`||`*`|
+|T91|Relative (Incremental) Programming|`PROGRAM_POSITION_RELARIVE`||`*`|
+
+? denotes an optional argument.
 
 **S-codes**
 
