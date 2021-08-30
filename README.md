@@ -72,16 +72,16 @@ to Realtime mode, use `S117 - Start Realtime Programming`.
 
 |CMD|Name|Symbol|Arguments|Capability|
 |---|---|---|---|---|
-|[T00](#tscode-command-T00)|Reciprocating Move|`RECIPROCATING_MOVE`|[C?](#tscode-argument-c), [V](#tscode-argument-v)|
-|[T01](#tscode-command-T01)|Linear Move|`LINEAR_MOVE`|[C?](#tscode-argument-c), [X](#tscode-argument-x), [Y](#tscode-argument-y), [Z](#tscode-argument-z), [F?](#tscode-argument-f)|
-|[T02](#tscode-command-T02)|Clockwise Circular Move|`CW_CIRCULAR_MOVE`|[C?](#tscode-argument-c), [I](#tscode-argument-i), [J](#tscode-argument-j), [K](#tscode-argument-k), [R](#tscode-argument-r), [X](#tscode-argument-x), [Y](#tscode-argument-y), [Z](#tscode-argument-z), [F?](#tscode-argument-f)|
-|[T03](#tscode-command-T03)|Counter-clockwise Circular Move|`CCW_CIRCULAR_MOVE`|[C?](#tscode-argument-c), [I](#tscode-argument-i), [J](#tscode-argument-j), [K](#tscode-argument-k), [R](#tscode-argument-r), [X](#tscode-argument-x), [Y](#tscode-argument-y), [Z](#tscode-argument-z), [F?](#tscode-argument-f)|
-|[T04](#tscode-command-T04)|Dwell|`DWELL`|[C?](#tscode-argument-c), [V](#tscode-argument-v)|
-|[T05](#tscode-command-T05)|Rotational Move|`ROTATIONAL_MOVE`|[C?](#tscode-argument-c), [X](#tscode-argument-x), [Y](#tscode-argument-y), [Z](#tscode-argument-z), [F?](#tscode-argument-f)|
+|[T00](#tscode-command-T00)|Reciprocating Move|`RECIPROCATING_MOVE`|[`C`?](#tscode-argument-c), [`V`](#tscode-argument-v)|
+|[T01](#tscode-command-T01)|Linear Move|`LINEAR_MOVE`|[`C`?](#tscode-argument-c), [`X`](#tscode-argument-x), [`Y`](#tscode-argument-y), [`Z`](#tscode-argument-z), [`F`?](#tscode-argument-f)|
+|[T02](#tscode-command-T02)|Clockwise Circular Move|`CW_CIRCULAR_MOVE`|[`C`?](#tscode-argument-c), [`I`](#tscode-argument-i), [`J`](#tscode-argument-j), [`K`](#tscode-argument-k), [`R`](#tscode-argument-r), [`X`](#tscode-argument-x), [`Y`](#tscode-argument-y), [`Z`](#tscode-argument-z), [`F`?](#tscode-argument-f)|
+|[T03](#tscode-command-T03)|Counter-clockwise Circular Move|`CCW_CIRCULAR_MOVE`|[`C`?](#tscode-argument-c), [`I`](#tscode-argument-i), [`J`](#tscode-argument-j), [`K`](#tscode-argument-k), [`R`](#tscode-argument-r), [`X`](#tscode-argument-x), [`Y`](#tscode-argument-y), [`Z`](#tscode-argument-z), [`F`?](#tscode-argument-f)|
+|[T04](#tscode-command-T04)|Dwell|`DWELL`|[`C`?](#tscode-argument-c), [`V`](#tscode-argument-v)|
+|[T05](#tscode-command-T05)|Rotational Move|`ROTATIONAL_MOVE`|[`C`?](#tscode-argument-c), [`X`](#tscode-argument-x), [`Y`](#tscode-argument-y), [`Z`](#tscode-argument-z), [`F`?](#tscode-argument-f)|
 |...|||||
-|[T17](#tscode-command-T17)|Select X-Y Plane|`SELECT_XY_PLANE`|[C?](#tscode-argument-c)|
-|[T18](#tscode-command-T18)|Select X-Z Plane|`SELECT_XZ_PLANE`|[C?](#tscode-argument-c)|
-|[T19](#tscode-command-T19)|Select Y-Z Plane|`SELECT_YZ_PLANE`|[C?](#tscode-argument-c)|
+|[T17](#tscode-command-T17)|Select X-Y Plane|`SELECT_XY_PLANE`|[`C`?](#tscode-argument-c)|
+|[T18](#tscode-command-T18)|Select X-Z Plane|`SELECT_XZ_PLANE`|[`C`?](#tscode-argument-c)|
+|[T19](#tscode-command-T19)|Select Y-Z Plane|`SELECT_YZ_PLANE`|[`C`?](#tscode-argument-c)|
 |[T20](#tscode-command-T20)|Program Unit: Inches|`PROGRAM_UNIT_INCH`||
 |[T21](#tscode-command-T21)|Program Unit: Metric (Millimeter)|`PROGRAM_UNIT_METRIC`||
 |[T22](#tscode-command-T22)|Program Unit: Percentage|`PROGRAM_UNIT_PERCENTAGE`||
@@ -102,7 +102,7 @@ to Realtime mode, use `S117 - Start Realtime Programming`.
 |[S03](#tscode-command-S03)|Vibration On|`VIBRATE_ON`||
 |[S04](#tscode-command-S04)|Vibration Pattern|`VIBRATE_PATTERN`||
 |[S05](#tscode-command-S05)|Vibration Off|`VIBRATE_OFF`||
-|[S06](#tscode-command-S06)|Default Channel Select|`DEFAULT_CHANNEL_SET`|[V](#tscode-argument-v)|
+|[S06](#tscode-command-S06)|Default Channel Select|`DEFAULT_CHANNEL_SET`|[`V`](#tscode-argument-v)|
 |[S07](#tscode-command-S07)|Lube Mist Pump ON|`LUBE_MIST_ON`||
 |[S08](#tscode-command-S08)|Lube Flood Pump ON|`LUBE_FLOOD_ON`||
 |[S09](#tscode-command-S09)|Lube Pump OFF|`LUBE_OFF`||

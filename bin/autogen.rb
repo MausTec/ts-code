@@ -48,7 +48,7 @@ EOF
                 arg = $1
             end
 
-            args << "[%s%s](#tscode-argument-%s)" % [
+            args << "[`%s`%s](#tscode-argument-%s)" % [
                 arg, optional ? '?' : '', arg.downcase
             ]
         end
