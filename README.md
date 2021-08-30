@@ -70,15 +70,15 @@ to Realtime mode, use `S117 - Start Realtime Programming`.
 
 **T-codes**
 
-|CMD|Name|Symbol|Arguments|Capability|
-|---|---|---|---|---|
+|CMD|Name|Symbol|Arguments|
+|---|---|---|---|
 |[T00](#tscode-command-T00)|Reciprocating Move|`RECIPROCATING_MOVE`|[`C`?](#tscode-argument-c), [`V`](#tscode-argument-v)|
 |[T01](#tscode-command-T01)|Linear Move|`LINEAR_MOVE`|[`C`?](#tscode-argument-c), [`X`](#tscode-argument-x), [`Y`](#tscode-argument-y), [`Z`](#tscode-argument-z), [`F`?](#tscode-argument-f)|
 |[T02](#tscode-command-T02)|Clockwise Circular Move|`CW_CIRCULAR_MOVE`|[`C`?](#tscode-argument-c), [`I`](#tscode-argument-i), [`J`](#tscode-argument-j), [`K`](#tscode-argument-k), [`R`](#tscode-argument-r), [`X`](#tscode-argument-x), [`Y`](#tscode-argument-y), [`Z`](#tscode-argument-z), [`F`?](#tscode-argument-f)|
 |[T03](#tscode-command-T03)|Counter-clockwise Circular Move|`CCW_CIRCULAR_MOVE`|[`C`?](#tscode-argument-c), [`I`](#tscode-argument-i), [`J`](#tscode-argument-j), [`K`](#tscode-argument-k), [`R`](#tscode-argument-r), [`X`](#tscode-argument-x), [`Y`](#tscode-argument-y), [`Z`](#tscode-argument-z), [`F`?](#tscode-argument-f)|
 |[T04](#tscode-command-T04)|Dwell|`DWELL`|[`C`?](#tscode-argument-c), [`V`](#tscode-argument-v)|
 |[T05](#tscode-command-T05)|Rotational Move|`ROTATIONAL_MOVE`|[`C`?](#tscode-argument-c), [`X`](#tscode-argument-x), [`Y`](#tscode-argument-y), [`Z`](#tscode-argument-z), [`F`?](#tscode-argument-f)|
-|...|||||
+|...||||
 |[T17](#tscode-command-T17)|Select X-Y Plane|`SELECT_XY_PLANE`|[`C`?](#tscode-argument-c)|
 |[T18](#tscode-command-T18)|Select X-Z Plane|`SELECT_XZ_PLANE`|[`C`?](#tscode-argument-c)|
 |[T19](#tscode-command-T19)|Select Y-Z Plane|`SELECT_YZ_PLANE`|[`C`?](#tscode-argument-c)|
@@ -86,16 +86,16 @@ to Realtime mode, use `S117 - Start Realtime Programming`.
 |[T21](#tscode-command-T21)|Program Unit: Metric (Millimeter)|`PROGRAM_UNIT_METRIC`||
 |[T22](#tscode-command-T22)|Program Unit: Percentage|`PROGRAM_UNIT_PERCENTAGE`||
 |[T23](#tscode-command-T23)|Program Unit: Byte|`PROGRAM_UNIT_BYTE`||
-|...|||||
+|...||||
 |[T28](#tscode-command-T28)|Return to Home Position|`RETURN_HOME`||
-|...|||||
+|...||||
 |[T90](#tscode-command-T90)|Absolute Programming|`PROGRAM_POSITION_ABSOLUTE`||
 |[T91](#tscode-command-T91)|Relative (Incremental) Programming|`PROGRAM_POSITION_RELARIVE`||
 
 **S-codes**
 
-|CMD|Name|Symbol|Arguments|Capability|
-|---|---|---|---|---|
+|CMD|Name|Symbol|Arguments|
+|---|---|---|---|
 |[S00](#tscode-command-S00)|Program Stop (Immediate)|`HALT_IMMEDIATE`||
 |[S01](#tscode-command-S01)|Sleep or Conditional Stop|`CONDITIONAL_STOP`||
 |[S02](#tscode-command-S02)|End of Program|`END_OF_PROGRAM`||
@@ -109,32 +109,32 @@ to Realtime mode, use `S117 - Start Realtime Programming`.
 |[S10](#tscode-command-S10)|Air Out valve Open|`AIR_OUT_OPEN`||
 |[S11](#tscode-command-S11)|Air In Valve Open|`AIR_IN_OPEN`||
 |[S12](#tscode-command-S12)|Air Valve Close|`AIR_CLOSE`||
-|...|||||
+|...||||
 |[S70](#tscode-command-S70)|Display a Message|`DISPLAY_MESSAGE`||
-|...|||||
+|...||||
 |[S72](#tscode-command-S72)|Play a Tone|`PLAY_TONE`||
-|...|||||
+|...||||
 |[S96](#tscode-command-S96)|Empty Program Buffer|`BUFFER_EMPTY`||
 |[S97](#tscode-command-S97)|Start Buffer Programming|`BUFFER_START`||
 |[S98](#tscode-command-S98)|End Buffer Programming|`BUFFER_END`||
 |[S99](#tscode-command-S99)|Execute Program Buffer|`BUFFER_EXECUTE`||
-|...|||||
+|...||||
 |[S104](#tscode-command-S104)|Enable Heater|`ENABLE_HEATER`||
 |[S105](#tscode-command-S105)|Get Heater Temperature|`GET_HEATER_TEMP`||
 |[S106](#tscode-command-S106)|Fan On|`FAN_ON`||
 |[S107](#tscode-command-S107)|Fan Off|`FAN_OFF`||
 |[S108](#tscode-command-S108)|Cancel Heating|`CANCEL_HEATING`||
 |[S109](#tscode-command-S109)|Set Heater and Wait|`ENABLE_HEATER_AND_WAIT`||
-|...|||||
+|...||||
 |[S113](#tscode-command-S113)|Ping / Pong|`PING`||
 |[S114](#tscode-command-S114)|Report Current Positions|`GET_CURRENT_POSITIONS`||
 |[S115](#tscode-command-S115)|Report Firmware and Capstring|`GET_CAPSTRINGS`||
 |[S116](#tscode-command-S116)|Wait for Movement|`WAIT_MOVEMENT`||
 |[S117](#tscode-command-S117)|Start Realtime Programming|`START_REALTIME_PROGRAMMING`||
 |[S118](#tscode-command-S118)|Start Queued Programming|`START_QUEUED_PROGRAMMING`||
-|...|||||
+|...||||
 |[S150](#tscode-command-S150)|Set LED Color|`SET_LED_COLOR`||
-|...|||||
+|...||||
 |[S199](#tscode-command-S199)|Exit TS-code Mode|`EXIT_TSCODE_MODE`||
 
 ? denotes an optional argument.

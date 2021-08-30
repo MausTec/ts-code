@@ -28,13 +28,13 @@ EOF
 
 **#{group}-codes**
 
-|CMD|Name|Symbol|Arguments|Capability|
-|---|---|---|---|---|
+|CMD|Name|Symbol|Arguments|
+|---|---|---|---|
 EOF
             end
 
             if !last_count.nil? and count != last_count + 1
-                readme << "|...|||||\n"
+                readme << "|...||||\n"
             end
 
             last_group = group
