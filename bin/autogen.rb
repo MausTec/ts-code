@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'json'
+require 'fileutils'
 
 PWD = File.expand_path(File.join(File.dirname(__FILE__), ".."))
 
@@ -9,34 +10,78 @@ def generate_command_types
     data = JSON.parse(File.read(command_types_json), symbolize_names: true)
 
     readme = <<-EOF
-# TS-code Listing
+# TS-code Commands
+EOF
 
-**T-codes**
+    last_group = nil;
+    last_count = nil;
+
+    data[:commands].each do |command|
+        args = []
+
+        if command[:command] =~ /([TS])(\d+)/
+            group = $1
+            count = $2.to_i
+            if last_group != group
+                last_count = nil
+                readme << <<-EOF
+
+**#{group}-codes**
 
 |CMD|Name|Symbol|Arguments|Capability|
 |---|---|---|---|---|
 EOF
-
-    data[:commands].select { |d| d[:command] =~ /^T/ }.each do |command|
-        args = []
-        command[:arguments].scan(/\[?[A-Z]\]?/).each do |arg|
-            if arg =~ /\[(\S)\]/
-                args << "#{$1}?"
-            else
-                args << arg
             end
+
+            if !last_count.nil? and count != last_count + 1
+                readme << "|...|||||\n"
+            end
+
+            last_group = group
+            last_count = count
+        end
+
+        command[:arguments].scan(/\[?[A-Z]\]?/).each do |arg|
+            optional = false
+            if arg =~ /\[(\S)\]/
+                optional = true
+                arg = $1
+            end
+
+            args << "[%s%s](#tscode-argument-%s)" % [
+                arg, optional ? '?' : '', arg.downcase
+            ]
         end
         
-        readme << "|%{command}|%{name}|`%{symbol}`|" % command
-        readme << args.join(', ') << "|`#{command[:capability_group]}`|\n"
+        readme << "|[%{command}](#tscode-command-%{command})|%{name}|`%{symbol}`|" % command
+        readme << args.join(', ') << "|\n"
     end
 
     readme << <<-EOF
 
 \? denotes an optional argument.
+
 EOF
 
-    puts readme
+    readme_filename = File.join(PWD, "README.md")
+    readme_txt = File.readlines(readme_filename)
+    FileUtils.mv(readme_filename, readme_filename + ".bak")
+    
+    fh = File.open(readme_filename, 'w+')
+    in_cmd_list = false
+    readme_txt.each do |line|
+        if in_cmd_list && line =~ /^#/
+            in_cmd_list = false
+        end
+
+        if line =~ /^#\s+TS-code\s+Commands/i
+            in_cmd_list = true
+            fh.puts readme
+        elsif !in_cmd_list
+            fh.puts line
+        end
+    end
+    fh.close
 end
 
 generate_command_types

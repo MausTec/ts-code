@@ -296,6 +296,270 @@
             "description": "All future commands are specified in an additive increment from the current position of that channel.",
             "capability_group": "*",
             "arguments": ""
+        },
+        {
+            "command": "S00",
+            "symbol": "HALT_IMMEDIATE",
+            "name": "Program Stop (Immediate)",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S01",
+            "symbol": "CONDITIONAL_STOP",
+            "name": "Sleep or Conditional Stop",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S02",
+            "symbol": "END_OF_PROGRAM",
+            "name": "End of Program",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S03",
+            "symbol": "VIBRATE_ON",
+            "name": "Vibration On",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S04",
+            "symbol": "VIBRATE_PATTERN",
+            "name": "Vibration Pattern",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S05",
+            "symbol": "VIBRATE_OFF",
+            "name": "Vibration Off",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S06",
+            "symbol": "DEFAULT_CHANNEL_SET",
+            "name": "Default Channel Select",
+            "description": "",
+            "capability_group": "",
+            "arguments": "V"
+        },
+        {
+            "command": "S07",
+            "symbol": "LUBE_MIST_ON",
+            "name": "Lube Mist Pump ON",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S08",
+            "symbol": "LUBE_FLOOD_ON",
+            "name": "Lube Flood Pump ON",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S09",
+            "symbol": "LUBE_OFF",
+            "name": "Lube Pump OFF",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S10",
+            "symbol": "AIR_OUT_OPEN",
+            "name": "Air Out valve Open",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S11",
+            "symbol": "AIR_IN_OPEN",
+            "name": "Air In Valve Open",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S12",
+            "symbol": "AIR_CLOSE",
+            "name": "Air Valve Close",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S70",
+            "symbol": "DISPLAY_MESSAGE",
+            "name": "Display a Message",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S72",
+            "symbol": "PLAY_TONE",
+            "name": "Play a Tone",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S96",
+            "symbol": "BUFFER_EMPTY",
+            "name": "Empty Program Buffer",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S97",
+            "symbol": "BUFFER_START",
+            "name": "Start Buffer Programming",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S98",
+            "symbol": "BUFFER_END",
+            "name": "End Buffer Programming",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S99",
+            "symbol": "BUFFER_EXECUTE",
+            "name": "Execute Program Buffer",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S104",
+            "symbol": "ENABLE_HEATER",
+            "name": "Enable Heater",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S105",
+            "symbol": "GET_HEATER_TEMP",
+            "name": "Get Heater Temperature",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S106",
+            "symbol": "FAN_ON",
+            "name": "Fan On",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S107",
+            "symbol": "FAN_OFF",
+            "name": "Fan Off",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S108",
+            "symbol": "CANCEL_HEATING",
+            "name": "Cancel Heating",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S109",
+            "symbol": "ENABLE_HEATER_AND_WAIT",
+            "name": "Set Heater and Wait",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S113",
+            "symbol": "PING",
+            "name": "Ping / Pong",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S114",
+            "symbol": "GET_CURRENT_POSITIONS",
+            "name": "Report Current Positions",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S115",
+            "symbol": "GET_CAPSTRINGS",
+            "name": "Report Firmware and Capstring",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S116",
+            "symbol": "WAIT_MOVEMENT",
+            "name": "Wait for Movement",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S117",
+            "symbol": "START_REALTIME_PROGRAMMING",
+            "name": "Start Realtime Programming",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S118",
+            "symbol": "START_QUEUED_PROGRAMMING",
+            "name": "Start Queued Programming",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S150",
+            "symbol": "SET_LED_COLOR",
+            "name": "Set LED Color",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
+        },
+        {
+            "command": "S199",
+            "symbol": "EXIT_TSCODE_MODE",
+            "name": "Exit TS-code Mode",
+            "description": "",
+            "capability_group": "",
+            "arguments": ""
         }
     ],
     "responses": [
