@@ -408,7 +408,7 @@ void tscode_process_buffer(char *buffer, tscode_command_callback_t callback, cha
     while (ptr != NULL) {
         tscode_command_response_t resp = TSCODE_RESPONSE_FAULT;
 
-        if (cmd.type == TSCODE_GET_CAPSTRING) {
+        if (cmd.type == TSCODE_GET_CAPSTRINGS) {
             tscode_generate_capstring(response, resp_len);
             resp = TSCODE_RESPONSE_OK;
         } else {

@@ -82,6 +82,52 @@ EOF
         end
     end
     fh.close
+
+    # Generate Commands from TS-code
+    tscode_command_types = <<-EOF
+/**
+ * THIS IS AN AUTOMATICALLY GENERATED FILE
+ * DO NOT EDIT THIS BY HAND
+ * 
+ * This is created by bin/autogen.rb
+ */
+#ifndef __tscode_command_types_h
+#define __tscode_command_types_h
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define __T(x) (0000 + x)
+#define __S(x) (1000 + x)
+
+/**
+ * For this enumeration, T-codes occupy 0-999, and S-codes occupy 1000-1999
+ */
+
+enum tscode_command_type {
+    TSCODE_COMMAND_INVALID = -1,
+    EOF
+        
+    data[:commands].each do |command|
+        tscode_command_types << "    TSCODE_#{command[:symbol]} = __#{command[:command][0]}(#{command[:command][1..-1].to_i}),\n"
+    end
+
+    tscode_command_types << <<-EOF
+};
+
+typedef enum tscode_command_type tscode_command_type_t;
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+EOF
+
+    tscode_command_types_path = File.join(PWD, "src", "tscode_command_types.h")
+    FileUtils.mv(tscode_command_types_path, tscode_command_types_path + ".bak")
+    File.write(tscode_command_types_path, tscode_command_types)
 end
 
 generate_command_types

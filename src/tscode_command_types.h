@@ -1,3 +1,9 @@
+/**
+ * THIS IS AN AUTOMATICALLY GENERATED FILE
+ * DO NOT EDIT THIS BY HAND
+ * 
+ * This is created by bin/autogen.rb
+ */
 #ifndef __tscode_command_types_h
 #define __tscode_command_types_h
 
@@ -14,40 +20,55 @@ extern "C" {
 
 enum tscode_command_type {
     TSCODE_COMMAND_INVALID = -1,
-
-    TSCODE_HALT_IMMEDIATE = __S(0), // Unconditional Halt
-    TSCODE_CONDITIONAL_STOP = __S(1), // Sleep or Conditional Stop
-    TSCODE_END_OF_PROGRAM = __S(2), // End of Program
-    TSCODE_VIBRATE_ON = __S(3), // Vibration On
-    TSCODE_VIBRATE_PATTERN = __S(4), // Vibration Pattern
-    TSCODE_VIBRATE_OFF = __S(5), // Vibration Off
-    TSCODE_DEFAULT_CHANNEL_SET = __S(6), // Default Channel Select
-    TSCODE_LUBE_MIST_ON = __S(7), // Lube Mist Pump ON
-    TSCODE_LUBE_FLOOD_ON = __S(8), // Lube Flood Pump ON
-    TSCODE_LUBE_OFF = __S(9), // Lube Pump OFF
-    TSCODE_AIR_OUT_OPEN = __S(10), // Air Out Valve OPEN
-    TSCODE_AIR_IN_OPEN = __S(11), // Air In Valve OPEN
-    TSCODE_AIR_CLOSE = __S(12), // Air Valve CLOSE
-    TSCODE_DISPLAY_MESSAGE = __S(70), // Display a Message
-    TSCODE_PLAY_TONE = __S(72), // Play a Tone
-    TSCODE_BUFFER_EMPTY = __S(96), // Empty Program Buffer
-    TSCODE_BUFFER_START = __S(97), // Start Buffer Programming
-    TSCODE_BUFFER_END = __S(98), // End Buffer Programming
-    TSCODE_BUFFER_EXECUTE = __S(99), // Execute Program Buffer
-    TSCODE_ENABLE_HEATER = __S(104), // Enable Heater
-    TSCODE_GET_HEATER_TEMP = __S(105), // Get Heater Temperature
-    TSCODE_FAN_ON = __S(106), // Fan On
-    TSCODE_FAN_OFF = __S(107), // Fan Off
-    TSCODE_CANCEL_HEATING = __S(108), // Cancel Heating
-    TSCODE_ENABLE_HEATER_AND_WAIT = __S(109), // Set Heater and Wait
-    TSCODE_PING = __S(113), // Ping / Pong
-    TSCODE_GET_CURRENT_POSITIONS = __S(114), // Report Current Positions
-    TSCODE_GET_CAPSTRING = __S(115), // Report Firmware and Capstring
-    TSCODE_WAIT_MOVEMENT = __S(116), // Wait for Movement
-    TSCODE_START_REALTIME_PROGRAMMING = __S(117), // Start Realtime Programming
-    TSCODE_START_QUEUED_PROGRAMMING = __S(118), // Start Queued Programming
-    TSCODE_SET_LED_COLOR = __S(150), // Set LED Color
-    EXIT_TSCODE_MODE = __S(199), // Exit TS-code Programming Mode
+    TSCODE_RECIPROCATING_MOVE = __T(0),
+    TSCODE_LINEAR_MOVE = __T(1),
+    TSCODE_CW_CIRCULAR_MOVE = __T(2),
+    TSCODE_CCW_CIRCULAR_MOVE = __T(3),
+    TSCODE_DWELL = __T(4),
+    TSCODE_ROTATIONAL_MOVE = __T(5),
+    TSCODE_SELECT_XY_PLANE = __T(17),
+    TSCODE_SELECT_XZ_PLANE = __T(18),
+    TSCODE_SELECT_YZ_PLANE = __T(19),
+    TSCODE_PROGRAM_UNIT_INCH = __T(20),
+    TSCODE_PROGRAM_UNIT_METRIC = __T(21),
+    TSCODE_PROGRAM_UNIT_PERCENTAGE = __T(22),
+    TSCODE_PROGRAM_UNIT_BYTE = __T(23),
+    TSCODE_RETURN_HOME = __T(28),
+    TSCODE_PROGRAM_POSITION_ABSOLUTE = __T(90),
+    TSCODE_PROGRAM_POSITION_RELARIVE = __T(91),
+    TSCODE_HALT_IMMEDIATE = __S(0),
+    TSCODE_CONDITIONAL_STOP = __S(1),
+    TSCODE_END_OF_PROGRAM = __S(2),
+    TSCODE_VIBRATE_ON = __S(3),
+    TSCODE_VIBRATE_PATTERN = __S(4),
+    TSCODE_VIBRATE_OFF = __S(5),
+    TSCODE_DEFAULT_CHANNEL_SET = __S(6),
+    TSCODE_LUBE_MIST_ON = __S(7),
+    TSCODE_LUBE_FLOOD_ON = __S(8),
+    TSCODE_LUBE_OFF = __S(9),
+    TSCODE_AIR_OUT_OPEN = __S(10),
+    TSCODE_AIR_IN_OPEN = __S(11),
+    TSCODE_AIR_CLOSE = __S(12),
+    TSCODE_DISPLAY_MESSAGE = __S(70),
+    TSCODE_PLAY_TONE = __S(72),
+    TSCODE_BUFFER_EMPTY = __S(96),
+    TSCODE_BUFFER_START = __S(97),
+    TSCODE_BUFFER_END = __S(98),
+    TSCODE_BUFFER_EXECUTE = __S(99),
+    TSCODE_ENABLE_HEATER = __S(104),
+    TSCODE_GET_HEATER_TEMP = __S(105),
+    TSCODE_FAN_ON = __S(106),
+    TSCODE_FAN_OFF = __S(107),
+    TSCODE_CANCEL_HEATING = __S(108),
+    TSCODE_ENABLE_HEATER_AND_WAIT = __S(109),
+    TSCODE_PING = __S(113),
+    TSCODE_GET_CURRENT_POSITIONS = __S(114),
+    TSCODE_GET_CAPSTRINGS = __S(115),
+    TSCODE_WAIT_MOVEMENT = __S(116),
+    TSCODE_START_REALTIME_PROGRAMMING = __S(117),
+    TSCODE_START_QUEUED_PROGRAMMING = __S(118),
+    TSCODE_SET_LED_COLOR = __S(150),
+    TSCODE_EXIT_TSCODE_MODE = __S(199),
 };
 
 typedef enum tscode_command_type tscode_command_type_t;

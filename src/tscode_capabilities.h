@@ -109,7 +109,7 @@ struct tscode_cap_channel {
 typedef struct tscode_cap_channel tscode_cap_channel_t;
 
 #define TSCODE_CAP_CHANNEL_DEFAULT { \
-    .capability = 0x00, \
+    .capability = (tscode_cap_flags_t) 0x00, \
     .channel = 0, \
     .range = TSCODE_CAP_RANGE_DEFAULT, \
     .multi_axis = NULL, \
