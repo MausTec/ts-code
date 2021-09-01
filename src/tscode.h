@@ -75,18 +75,6 @@ typedef struct tscode_command tscode_command_t;
  */
 typedef tscode_command_response_t (*tscode_command_callback_t)(tscode_command_t*, char*, size_t);
 
-/**
- * This holds information about a device, which is used either in host mode when querying the stream, or in client
- * mode when responding to a host query. This can be automatically handled if you use tscode_set_device_info and
- * process your stream using one of the process_ commands. Be sure to also add your caps.
- */
-struct tscode_device_info {
-    const char *manufacturer;
-    const char *device_name;
-    const char *firmware_version;
-};
-
-typedef struct tscode_device_info tscode_device_info_t;
 
 /**
  * This frees up memory used for a command, as well as any structures pointed to by it.

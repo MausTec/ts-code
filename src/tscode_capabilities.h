@@ -40,8 +40,11 @@ extern "C" {
 
 #include "tscode_cap_flags.h"
 
+
 /**
- *
+ * This holds information about a device, which is used either in host mode when querying the stream, or in client
+ * mode when responding to a host query. This can be automatically handled if you use tscode_set_device_info and
+ * process your stream using one of the process_ commands. Be sure to also add your caps.
  */
 struct tscode_device_vendor_details {
     const char *vendor;
