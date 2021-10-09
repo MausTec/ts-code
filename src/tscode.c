@@ -17,7 +17,7 @@ static char _ostream_buffer[TSCODE_OSTREAM_BUFFER_SIZE + 1] = "";
 
 
 // Don't forget to keep this in sync with the base enum decl!
-const char *tscode_command_response_str[3] = {
+const char* tscode_command_response_str[3] = {
     "OK", // TSCODE_RESPONSE_OK
     "HOLD", // TSCODE_RESPONSE_HOLD
     "FAULT", // TSCODE_RESPONSE_FAULT
@@ -253,6 +253,49 @@ char* tscode_parse_command(char* cmd_string, tscode_command_t* cmd, char** savep
     }
 }
 
+void tscode_serialize_command(char* buffer, tscode_command_t* cmd, size_t buflen) {
+    char* cur = buffer;
+    char* const end = buffer + buflen;
+
+    cur += snprintf(cur, end - cur, "%c%02d",
+        (cmd->type > 1000 ? 'S' : 'T'),
+        cmd->type % 1000
+    );
+
+    if (cmd->channel != 0) {
+        cur += snprintf(cur, end - cur, "C%02d", cmd->channel);
+    }
+
+    if (cmd->speed != NULL) {
+        char unit_char = ' ';
+        switch (cmd->speed->unit) {
+        case TSCODE_UNIT_BYTE:
+            unit_char = 'B';
+            break;
+        case TSCODE_UNIT_DEGREES:
+            unit_char = 'D';
+            break;
+        case TSCODE_UNIT_INCH:
+            unit_char = 'N';
+            break;
+        case TSCODE_UNIT_METRIC:
+            unit_char = 'M';
+            break;
+        case TSCODE_UNIT_PERCENTAGE:
+            unit_char = 'P';
+            break;
+        }
+
+        if (cmd->speed->unit == TSCODE_UNIT_BYTE) {
+            cur += snprintf(cur, end-cur, "%cV%d", unit_char, (uint8_t) cmd->speed->value);
+        } else {
+            cur += snprintf(cur, end-cur, "%cV%d", unit_char, cmd->speed->value);
+        }
+    }
+
+    strncpy(cur, "\n", end-cur);
+}
+
 tscode_command_type_t tscode_parse_cmd_type(char* cmd, char** saveptr) {
     char arg_char = '\0';
     float value = 0.0;
@@ -397,7 +440,7 @@ void tscode_dispose_command(tscode_command_t* cmd) {
 }
 
 
-void tscode_process_buffer(char *buffer, tscode_command_callback_t callback, char *response, size_t resp_len) {
+void tscode_process_buffer(char* buffer, tscode_command_callback_t callback, char* response, size_t resp_len) {
     tscode_command_t cmd;
 
     char* ptr = NULL;
