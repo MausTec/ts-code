@@ -144,6 +144,11 @@ char *tscode_parse_command(char *cmd_string, tscode_command_t *cmd, char **savep
 void _tscode_print_command(tscode_command_t *cmd);
 
 /**
+ * This will serialize a tscode command object.
+ */
+void tscode_serialize_command(char *buffer, tscode_command_t *cmd, size_t buflen);
+
+/**
  * This will automatically process a buffer, scanning for commands and calling the callback for each. You should pass
  * a character buffer and length for response, so that your commands have something to write to.
  */
@@ -166,6 +171,7 @@ void tscode_process_stream(FILE* istream, FILE* ostream, tscode_command_callback
  * external buffers, which makes it useful for multi-stream processing.
  */
 void tscode_process_stream_r(FILE* istream, FILE* ostream, tscode_command_callback_t callback, char* istream_buf, size_t istream_buf_len, char* ostream_buf, size_t ostream_buf_len);
+
 
 #ifdef __cplusplus
 }
