@@ -26,6 +26,11 @@ extern "C" {
 #define TSCODE_OSTREAM_BUFFER_SIZE 120
 #endif
 
+// Ringbuffer size for any usage of it.
+#ifndef TSCODE_RINGBUFFER_SIZE
+#define TSCODE_RINGBUFFER_SIZE 120
+#endif
+
 
 /**
  * // Don't forget to keep this in sync with the strings decl below and in tscode.c!
@@ -41,7 +46,7 @@ enum tscode_command_response {
 
 typedef enum tscode_command_response tscode_command_response_t;
 
-extern const char *tscode_command_response_str[3];
+extern const char *tscode_command_response_str[6];
 
 /**
  * Contains a full definition of a TS-code command, including all relevant arguments and command type.
@@ -69,6 +74,17 @@ typedef struct tscode_command tscode_command_t;
     .start = NULL, \
     .radius = NULL, \
 }
+
+/**
+ * A generic typed ringbuffer you can use for parsing various other data streams.
+ */
+struct tscode_ringbuffer {
+    char buffer[TSCODE_RINGBUFFER_SIZE + 1];
+    size_t head;
+    size_t tail;
+};
+
+typedef struct tscode_ringbuffer tscode_ringbuffer_t;
 
 /**
  * This is the callback you're going to want to write if you use the process_ functions.
@@ -132,6 +148,11 @@ void _tscode_print_command(tscode_command_t *cmd);
  * a character buffer and length for response, so that your commands have something to write to.
  */
 void tscode_process_buffer(char *buffer, tscode_command_callback_t callback, char *response, size_t resp_len);
+
+/**
+ * This will automatically process a ringbuffer. The pointers are updated.
+ */
+void tscode_process_ringbuffer(tscode_ringbuffer_t *buffer, tscode_command_callback_t callback, char *response, size_t resp_len);
 
 /**
  * This automatically processes streams, calling the callback every time a command is parsed in full. It uses the single

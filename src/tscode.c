@@ -17,9 +17,12 @@ static char _ostream_buffer[TSCODE_OSTREAM_BUFFER_SIZE + 1] = "";
 
 
 // Don't forget to keep this in sync with the base enum decl!
-const char *tscode_command_response_str[3] = {
+const char *tscode_command_response_str[6] = {
     "OK", // TSCODE_RESPONSE_OK
     "HOLD", // TSCODE_RESPONSE_HOLD
+    "OUT_OF_BOUNDS", // TSCODE_RESPONSE_OUT_OF_BOUNDS
+    "NO_CHANNEL", // TSCODE_RESPONSE_NO_CHANNEL
+    "NO_CAPABILITY", // TSCODE_RESPONSE_NO_CAPABILITY
     "FAULT", // TSCODE_RESPONSE_FAULT
 };
 
