@@ -17,7 +17,7 @@ static char _ostream_buffer[TSCODE_OSTREAM_BUFFER_SIZE + 1] = "";
 
 
 // Don't forget to keep this in sync with the base enum decl!
-const char *tscode_command_response_str[] = {
+const char* tscode_command_response_str[] = {
     "OK", // TSCODE_RESPONSE_OK
     "HOLD", // TSCODE_RESPONSE_HOLD
     "OUT_OF_BOUNDS", // TSCODE_RESPONSE_OUT_OF_BOUNDS
@@ -287,16 +287,20 @@ void tscode_serialize_command(char* buffer, tscode_command_t* cmd, size_t buflen
         case TSCODE_UNIT_PERCENTAGE:
             unit_char = 'P';
             break;
+
+        default:
+            unit_char = ' ';
+            break;
         }
 
         if (cmd->speed->unit == TSCODE_UNIT_BYTE) {
-            cur += snprintf(cur, end-cur, "%cV%d", unit_char, (uint8_t) cmd->speed->value);
+            cur += snprintf(cur, end - cur, "%cV%d", unit_char, (uint8_t) cmd->speed->value);
         } else {
-            cur += snprintf(cur, end-cur, "%cV%d", unit_char, cmd->speed->value);
+            cur += snprintf(cur, end - cur, "%cV%.4f", unit_char, cmd->speed->value);
         }
     }
 
-    strncpy(cur, "\n", end-cur);
+    strncpy(cur, "\n", end - cur);
 }
 
 tscode_command_type_t tscode_parse_cmd_type(char* cmd, char** saveptr) {
