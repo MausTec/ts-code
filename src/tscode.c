@@ -284,12 +284,15 @@ void tscode_serialize_command(char* buffer, tscode_command_t* cmd, size_t buflen
         case TSCODE_UNIT_PERCENTAGE:
             unit_char = 'P';
             break;
+        default:
+            unit_char = '?';
+            break;
         }
 
         if (cmd->speed->unit == TSCODE_UNIT_BYTE) {
             cur += snprintf(cur, end-cur, "%cV%d", unit_char, (uint8_t) cmd->speed->value);
         } else {
-            cur += snprintf(cur, end-cur, "%cV%d", unit_char, cmd->speed->value);
+            cur += snprintf(cur, end-cur, "%cV%f", unit_char, cmd->speed->value);
         }
     }
 
