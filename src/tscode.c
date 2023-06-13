@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <ctype.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <stdint.h>
@@ -15,41 +15,33 @@ static size_t _istream_buffer_idx = 0;
 static char _ostream_buffer[TSCODE_OSTREAM_BUFFER_SIZE + 1] = "";
 #endif
 
-
 // Don't forget to keep this in sync with the base enum decl!
 const char* tscode_command_response_str[] = {
-    "OK", // TSCODE_RESPONSE_OK
-    "HOLD", // TSCODE_RESPONSE_HOLD
+    "OK",            // TSCODE_RESPONSE_OK
+    "HOLD",          // TSCODE_RESPONSE_HOLD
     "OUT_OF_BOUNDS", // TSCODE_RESPONSE_OUT_OF_BOUNDS
-    "NO_CHANNEL", // TSCODE_RESPONSE_NO_CHANNEL
+    "NO_CHANNEL",    // TSCODE_RESPONSE_NO_CHANNEL
     "NO_CAPABILITY", // TSCODE_RESPONSE_NO_CAPABILITY
-    "FAULT", // TSCODE_RESPONSE_FAULT
+    "FAULT",         // TSCODE_RESPONSE_FAULT
 };
 
 char tscode_unit_str[6] = { ' ', 'P', 'M', 'N', 'B', 'D' };
 
 void _tscode_fmt_unit(char* buffer, size_t n, tscode_unit_t* unit) {
     if (unit->unit == TSCODE_UNIT_BYTE) {
-        snprintf(buffer, n, "0x%02x", (uint8_t) unit->value);
+        snprintf(buffer, n, "0x%02x", (uint8_t)unit->value);
     } else {
-        snprintf(buffer, n, "%0.2f", unit->value * (unit->unit == TSCODE_UNIT_PERCENTAGE ? 100 : 1));
+        snprintf(
+            buffer, n, "%0.2f", unit->value * (unit->unit == TSCODE_UNIT_PERCENTAGE ? 100 : 1)
+        );
 
         switch (unit->unit) {
-        case TSCODE_UNIT_DEGREES:
-            strncat(buffer, "deg", n);
-            break;
-        case TSCODE_UNIT_INCH:
-            strncat(buffer, "in", n);
-            break;
-        case TSCODE_UNIT_METRIC:
-            strncat(buffer, "mm", n);
-            break;
-        case TSCODE_UNIT_PERCENTAGE:
-            strncat(buffer, "%", n);
-            break;
+        case TSCODE_UNIT_DEGREES: strncat(buffer, "deg", n); break;
+        case TSCODE_UNIT_INCH: strncat(buffer, "in", n); break;
+        case TSCODE_UNIT_METRIC: strncat(buffer, "mm", n); break;
+        case TSCODE_UNIT_PERCENTAGE: strncat(buffer, "%", n); break;
 
-        default:
-            break;
+        default: break;
         }
     }
 }
@@ -128,11 +120,10 @@ char* tscode_parse_command(char* cmd_string, tscode_command_t* cmd, char** savep
     while (ptr != NULL) {
         if (argc == 'T' || argc == 'S') {
             // we went too far, so i'm gonna back it up
-            // also this isn't in the switch because i need break and don't wanna use a goto
-            // out of visceral fear that someone on the internet will see this and throw boiling
-            // hot pitch on me for it prior to immediately releasing raptors
-            // xkcd promised raptors if i use goto
-            // i'd rather not risk it
+            // also this isn't in the switch because i need break and don't wanna use
+            // a goto out of visceral fear that someone on the internet will see this
+            // and throw boiling hot pitch on me for it prior to immediately releasing
+            // raptors xkcd promised raptors if i use goto i'd rather not risk it
             *saveptr = rollbackptr;
             break;
         }
@@ -260,10 +251,7 @@ void tscode_serialize_command(char* buffer, tscode_command_t* cmd, size_t buflen
     char* cur = buffer;
     char* const end = buffer + buflen;
 
-    cur += snprintf(cur, end - cur, "%c%02d",
-        (cmd->type > 1000 ? 'S' : 'T'),
-        cmd->type % 1000
-    );
+    cur += snprintf(cur, end - cur, "%c%02d", (cmd->type > 1000 ? 'S' : 'T'), cmd->type % 1000);
 
     if (cmd->channel != 0) {
         cur += snprintf(cur, end - cur, "C%02d", cmd->channel);
@@ -272,29 +260,17 @@ void tscode_serialize_command(char* buffer, tscode_command_t* cmd, size_t buflen
     if (cmd->speed != NULL) {
         char unit_char = ' ';
         switch (cmd->speed->unit) {
-        case TSCODE_UNIT_BYTE:
-            unit_char = 'B';
-            break;
-        case TSCODE_UNIT_DEGREES:
-            unit_char = 'D';
-            break;
-        case TSCODE_UNIT_INCH:
-            unit_char = 'N';
-            break;
-        case TSCODE_UNIT_METRIC:
-            unit_char = 'M';
-            break;
-        case TSCODE_UNIT_PERCENTAGE:
-            unit_char = 'P';
-            break;
+        case TSCODE_UNIT_BYTE: unit_char = 'B'; break;
+        case TSCODE_UNIT_DEGREES: unit_char = 'D'; break;
+        case TSCODE_UNIT_INCH: unit_char = 'N'; break;
+        case TSCODE_UNIT_METRIC: unit_char = 'M'; break;
+        case TSCODE_UNIT_PERCENTAGE: unit_char = 'P'; break;
 
-        default:
-            unit_char = ' ';
-            break;
+        default: unit_char = ' '; break;
         }
 
         if (cmd->speed->unit == TSCODE_UNIT_BYTE) {
-            cur += snprintf(cur, end - cur, "%cV%d", unit_char, (uint8_t) cmd->speed->value);
+            cur += snprintf(cur, end - cur, "%cV%d", unit_char, (uint8_t)cmd->speed->value);
         } else {
             cur += snprintf(cur, end - cur, "%cV%.4f", unit_char, cmd->speed->value);
         }
@@ -311,8 +287,8 @@ tscode_command_type_t tscode_parse_cmd_type(char* cmd, char** saveptr) {
     char* ptr = tscode_parse_argument(cmd, &arg_char, &value, &args, saveptr);
 
     while (ptr != NULL) {
-        if (arg_char == 'T') return (tscode_command_type_t) __T((int) value);
-        if (arg_char == 'S') return (tscode_command_type_t) __S((int) value);
+        if (arg_char == 'T') return (tscode_command_type_t)__T((int)value);
+        if (arg_char == 'S') return (tscode_command_type_t)__S((int)value);
 
         ptr = tscode_parse_argument(NULL, &arg_char, &value, &args, saveptr);
     }
@@ -320,7 +296,9 @@ tscode_command_type_t tscode_parse_cmd_type(char* cmd, char** saveptr) {
     return TSCODE_COMMAND_INVALID;
 }
 
-char* tscode_parse_argument(char* arg_string, char* arg_char, float* value, char** args, char** saveptr) {
+char* tscode_parse_argument(
+    char* arg_string, char* arg_char, float* value, char** args, char** saveptr
+) {
     char tok = '\0';
 
     *arg_char = '\0';
@@ -410,7 +388,7 @@ char* tscode_parse_argument(char* arg_string, char* arg_char, float* value, char
 
         // parse digits
         else if (isdigit(tok)) {
-            float digit = (float) (tok - '0');
+            float digit = (float)(tok - '0');
 
             // we haven't hit a decimal point yet
             if (decimal == 0) {
@@ -434,7 +412,8 @@ char* tscode_parse_argument(char* arg_string, char* arg_char, float* value, char
         (*saveptr)++;
     }
 
-    // We got to the end of the string. If there was an argument here, return our startptr, otherwise NULL.
+    // We got to the end of the string. If there was an argument here, return our
+    // startptr, otherwise NULL.
     return *arg_char == '\0' ? NULL : startptr;
 }
 
@@ -446,16 +425,19 @@ void tscode_dispose_command(tscode_command_t* cmd) {
     if (cmd->radius != NULL) free(cmd->radius);
 }
 
-
-void tscode_process_buffer(char* buffer, tscode_command_callback_t callback, char* response, size_t resp_len) {
+size_t tscode_process_buffer(
+    char* buffer, tscode_command_callback_t callback, char* response, size_t resp_len
+) {
     tscode_command_t cmd;
 
     char* ptr = NULL;
+    size_t len = 0;
     char* saveptr = NULL;
 
     ptr = tscode_parse_command(buffer, &cmd, &saveptr);
 
     while (ptr != NULL) {
+        len = ptr - buffer;
         tscode_command_response_t resp = TSCODE_RESPONSE_FAULT;
 
         if (cmd.type == TSCODE_GET_CAPSTRINGS) {
@@ -471,6 +453,8 @@ void tscode_process_buffer(char* buffer, tscode_command_callback_t callback, cha
 
         ptr = tscode_parse_command(NULL, &cmd, &saveptr);
     }
+
+    return len;
 }
 
 #ifdef TSCODE_DISABLE_STREAM_BUFFERS
@@ -486,7 +470,9 @@ void tscode_process_stream(FILE* istream, FILE* ostream, tscode_command_callback
         if (c == '\n') {
             if (_istream_buffer[0] != '\0') {
                 _ostream_buffer[0] = '\0';
-                tscode_process_buffer(_istream_buffer, callback, _ostream_buffer, TSCODE_OSTREAM_BUFFER_SIZE);
+                tscode_process_buffer(
+                    _istream_buffer, callback, _ostream_buffer, TSCODE_OSTREAM_BUFFER_SIZE
+                );
                 fputs(_ostream_buffer, ostream);
                 fputc('\n', ostream);
             }
@@ -496,7 +482,8 @@ void tscode_process_stream(FILE* istream, FILE* ostream, tscode_command_callback
         } else {
             if (_istream_buffer_idx >= TSCODE_ISTREAM_BUFFER_SIZE) {
                 // BUFFER OVERFLOW INCOMING
-                // we can realloc later, for now I'm gonna return, which will discard everything else until a newline
+                // we can realloc later, for now I'm gonna return, which will discard
+                // everything else until a newline
                 return;
             } else {
                 _istream_buffer[_istream_buffer_idx++] = c;
