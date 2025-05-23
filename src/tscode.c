@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <ctype.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <stdint.h>
@@ -15,24 +15,24 @@ static size_t _istream_buffer_idx = 0;
 static char _ostream_buffer[TSCODE_OSTREAM_BUFFER_SIZE + 1] = "";
 #endif
 
-
 // Don't forget to keep this in sync with the base enum decl!
 const char* tscode_command_response_str[] = {
-    "OK", // TSCODE_RESPONSE_OK
-    "HOLD", // TSCODE_RESPONSE_HOLD
+    "OK",            // TSCODE_RESPONSE_OK
+    "HOLD",          // TSCODE_RESPONSE_HOLD
     "OUT_OF_BOUNDS", // TSCODE_RESPONSE_OUT_OF_BOUNDS
-    "NO_CHANNEL", // TSCODE_RESPONSE_NO_CHANNEL
+    "NO_CHANNEL",    // TSCODE_RESPONSE_NO_CHANNEL
     "NO_CAPABILITY", // TSCODE_RESPONSE_NO_CAPABILITY
-    "FAULT", // TSCODE_RESPONSE_FAULT
+    "FAULT",         // TSCODE_RESPONSE_FAULT
 };
 
 char tscode_unit_str[6] = { ' ', 'P', 'M', 'N', 'B', 'D' };
 
 void _tscode_fmt_unit(char* buffer, size_t n, tscode_unit_t* unit) {
     if (unit->unit == TSCODE_UNIT_BYTE) {
-        snprintf(buffer, n, "0x%02x", (uint8_t) unit->value);
+        snprintf(buffer, n, "0x%02x", (uint8_t)unit->value);
     } else {
-        snprintf(buffer, n, "%0.2f", unit->value * (unit->unit == TSCODE_UNIT_PERCENTAGE ? 100 : 1));
+        snprintf(buffer, n, "%0.2f",
+                 unit->value * (unit->unit == TSCODE_UNIT_PERCENTAGE ? 100 : 1));
 
         switch (unit->unit) {
         case TSCODE_UNIT_DEGREES:
@@ -104,6 +104,10 @@ void _tscode_print_command(tscode_command_t* cmd) {
         _tscode_fmt_coordinate(buffer, 40, cmd->end);
         printf("End: %s\n", buffer);
     }
+
+    if (cmd->nonce != -1) {
+        printf("Nonce: %d\n", cmd->nonce);
+    }
 }
 
 char* tscode_parse_command(char* cmd_string, tscode_command_t* cmd, char** saveptr) {
@@ -156,63 +160,72 @@ char* tscode_parse_command(char* cmd_string, tscode_command_t* cmd, char** savep
         }
 
         case 'X': {
-            if (out.end == NULL) out.end = malloc(sizeof(tscode_coordinate_t));
+            if (out.end == NULL)
+                out.end = malloc(sizeof(tscode_coordinate_t));
             out.end->x.unit = unit_override;
             out.end->x.value = argv;
             break;
         }
 
         case 'Y': {
-            if (out.end == NULL) out.end = malloc(sizeof(tscode_coordinate_t));
+            if (out.end == NULL)
+                out.end = malloc(sizeof(tscode_coordinate_t));
             out.end->y.unit = unit_override;
             out.end->y.value = argv;
             break;
         }
 
         case 'Z': {
-            if (out.end == NULL) out.end = malloc(sizeof(tscode_coordinate_t));
+            if (out.end == NULL)
+                out.end = malloc(sizeof(tscode_coordinate_t));
             out.end->z.unit = unit_override;
             out.end->z.value = argv;
             break;
         }
 
         case 'I': {
-            if (out.start == NULL) out.start = malloc(sizeof(tscode_coordinate_t));
+            if (out.start == NULL)
+                out.start = malloc(sizeof(tscode_coordinate_t));
             out.start->x.unit = unit_override;
             out.start->x.value = argv;
             break;
         }
 
         case 'J': {
-            if (out.start == NULL) out.start = malloc(sizeof(tscode_coordinate_t));
+            if (out.start == NULL)
+                out.start = malloc(sizeof(tscode_coordinate_t));
             out.start->y.unit = unit_override;
             out.start->y.value = argv;
             break;
         }
 
         case 'K': {
-            if (out.start == NULL) out.start = malloc(sizeof(tscode_coordinate_t));
+            if (out.start == NULL)
+                out.start = malloc(sizeof(tscode_coordinate_t));
             out.start->z.unit = unit_override;
             out.start->z.value = argv;
             break;
         }
 
         case 'R': {
-            if (out.radius == NULL) out.radius = malloc(sizeof(tscode_unit_t));
+            if (out.radius == NULL)
+                out.radius = malloc(sizeof(tscode_unit_t));
             out.radius->unit = unit_override;
             out.radius->value = argv;
             break;
         }
 
         case 'F': {
-            if (out.feedrate == NULL) out.feedrate = malloc(sizeof(tscode_unit_t));
+            if (out.feedrate == NULL)
+                out.feedrate = malloc(sizeof(tscode_unit_t));
             out.feedrate->unit = unit_override;
             out.feedrate->value = argv;
             break;
         }
 
         case 'V': {
-            if (out.speed == NULL) out.speed = malloc(sizeof(tscode_unit_t));
+            if (out.speed == NULL)
+                out.speed = malloc(sizeof(tscode_unit_t));
             out.speed->unit = unit_override;
             out.speed->value = argv;
             break;
@@ -242,6 +255,11 @@ char* tscode_parse_command(char* cmd_string, tscode_command_t* cmd, char** savep
             unit_override = TSCODE_UNIT_DEGREES;
             break;
         }
+
+        case 'Q': {
+            out.nonce = argv;
+            break;
+        }
         }
 
         rollbackptr = *saveptr;
@@ -260,10 +278,7 @@ void tscode_serialize_command(char* buffer, tscode_command_t* cmd, size_t buflen
     char* cur = buffer;
     char* const end = buffer + buflen;
 
-    cur += snprintf(cur, end - cur, "%c%02d",
-        (cmd->type > 1000 ? 'S' : 'T'),
-        cmd->type % 1000
-    );
+    cur += snprintf(cur, end - cur, "%c%02d", (cmd->type > 1000 ? 'S' : 'T'), cmd->type % 1000);
 
     if (cmd->channel != 0) {
         cur += snprintf(cur, end - cur, "C%02d", cmd->channel);
@@ -294,7 +309,7 @@ void tscode_serialize_command(char* buffer, tscode_command_t* cmd, size_t buflen
         }
 
         if (cmd->speed->unit == TSCODE_UNIT_BYTE) {
-            cur += snprintf(cur, end - cur, "%cV%d", unit_char, (uint8_t) cmd->speed->value);
+            cur += snprintf(cur, end - cur, "%cV%d", unit_char, (uint8_t)cmd->speed->value);
         } else {
             cur += snprintf(cur, end - cur, "%cV%.4f", unit_char, cmd->speed->value);
         }
@@ -311,8 +326,10 @@ tscode_command_type_t tscode_parse_cmd_type(char* cmd, char** saveptr) {
     char* ptr = tscode_parse_argument(cmd, &arg_char, &value, &args, saveptr);
 
     while (ptr != NULL) {
-        if (arg_char == 'T') return (tscode_command_type_t) __T((int) value);
-        if (arg_char == 'S') return (tscode_command_type_t) __S((int) value);
+        if (arg_char == 'T')
+            return (tscode_command_type_t)__T((int)value);
+        if (arg_char == 'S')
+            return (tscode_command_type_t)__S((int)value);
 
         ptr = tscode_parse_argument(NULL, &arg_char, &value, &args, saveptr);
     }
@@ -320,7 +337,8 @@ tscode_command_type_t tscode_parse_cmd_type(char* cmd, char** saveptr) {
     return TSCODE_COMMAND_INVALID;
 }
 
-char* tscode_parse_argument(char* arg_string, char* arg_char, float* value, char** args, char** saveptr) {
+char* tscode_parse_argument(char* arg_string, char* arg_char, float* value, char** args,
+                            char** saveptr) {
     char tok = '\0';
 
     *arg_char = '\0';
@@ -410,7 +428,7 @@ char* tscode_parse_argument(char* arg_string, char* arg_char, float* value, char
 
         // parse digits
         else if (isdigit(tok)) {
-            float digit = (float) (tok - '0');
+            float digit = (float)(tok - '0');
 
             // we haven't hit a decimal point yet
             if (decimal == 0) {
@@ -434,20 +452,26 @@ char* tscode_parse_argument(char* arg_string, char* arg_char, float* value, char
         (*saveptr)++;
     }
 
-    // We got to the end of the string. If there was an argument here, return our startptr, otherwise NULL.
+    // We got to the end of the string. If there was an argument here, return our startptr,
+    // otherwise NULL.
     return *arg_char == '\0' ? NULL : startptr;
 }
 
 void tscode_dispose_command(tscode_command_t* cmd) {
-    if (cmd->str != NULL) free(cmd->str);
-    if (cmd->end != NULL) free(cmd->end);
-    if (cmd->start != NULL) free(cmd->start);
-    if (cmd->speed != NULL) free(cmd->speed);
-    if (cmd->radius != NULL) free(cmd->radius);
+    if (cmd->str != NULL)
+        free(cmd->str);
+    if (cmd->end != NULL)
+        free(cmd->end);
+    if (cmd->start != NULL)
+        free(cmd->start);
+    if (cmd->speed != NULL)
+        free(cmd->speed);
+    if (cmd->radius != NULL)
+        free(cmd->radius);
 }
 
-
-void tscode_process_buffer(char* buffer, tscode_command_callback_t callback, char* response, size_t resp_len) {
+void tscode_process_buffer(char* buffer, tscode_command_callback_t callback, char* response,
+                           size_t resp_len) {
     tscode_command_t cmd;
 
     char* ptr = NULL;
@@ -465,7 +489,18 @@ void tscode_process_buffer(char* buffer, tscode_command_callback_t callback, cha
             resp = callback(&cmd, response, resp_len);
         }
 
-        if (response[0] != '\0') strncat(response, "\n", resp_len);
+        if (cmd.nonce != -1) {
+            // Ensure new break before append nonce
+            if (response[0] != '\0')
+                strncat(response, ";", resp_len);
+
+            sniprintf(response, resp_len, "Q%d", cmd.nonce);
+        }
+
+        // Ensure new break before append result code
+        if (response[0] != '\0')
+            strncat(response, ";", resp_len);
+
         strncat(response, tscode_command_response_str[resp], resp_len);
         tscode_dispose_command(&cmd);
 
@@ -486,7 +521,8 @@ void tscode_process_stream(FILE* istream, FILE* ostream, tscode_command_callback
         if (c == '\n') {
             if (_istream_buffer[0] != '\0') {
                 _ostream_buffer[0] = '\0';
-                tscode_process_buffer(_istream_buffer, callback, _ostream_buffer, TSCODE_OSTREAM_BUFFER_SIZE);
+                tscode_process_buffer(_istream_buffer, callback, _ostream_buffer,
+                                      TSCODE_OSTREAM_BUFFER_SIZE);
                 fputs(_ostream_buffer, ostream);
                 fputc('\n', ostream);
             }
@@ -496,7 +532,8 @@ void tscode_process_stream(FILE* istream, FILE* ostream, tscode_command_callback
         } else {
             if (_istream_buffer_idx >= TSCODE_ISTREAM_BUFFER_SIZE) {
                 // BUFFER OVERFLOW INCOMING
-                // we can realloc later, for now I'm gonna return, which will discard everything else until a newline
+                // we can realloc later, for now I'm gonna return, which will discard everything
+                // else until a newline
                 return;
             } else {
                 _istream_buffer[_istream_buffer_idx++] = c;
